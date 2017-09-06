@@ -2,6 +2,8 @@
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+
 
 namespace TLS
 {
@@ -9,15 +11,37 @@ namespace TLS
     {
         static void Main(string[] args)
         {
-            string input = System.IO.File.ReadAllText(@"c:\work\training\TLS\SampleText.txt");
+            string input = File.ReadAllText(@"c:\work\training\TLS\SampleText.txt");
             int length = input.Length;
-            int counter = 0;
-            Regex tra = new Regex("tra", RegexOptions.IgnoreCase);
+            Dictionary<string, int> tls = new Dictionary<string, int>();
 
-            var matches = tra.Matches(input);
-            counter = matches.Count;
+            Regex characters = new Regex(@"\w{3}");
 
-            Console.WriteLine(counter);
+            for (var i = 0; i < length - 2; i++)
+            {
+                string test = input.Substring(i, 3);
+                test = test.ToLower();
+                if (characters.IsMatch(test))
+                {
+
+
+                    if (tls.ContainsKey(test))
+                    {
+                        tls[test] = tls[test] + 1;
+                    }
+                    else
+                    {
+                        tls.Add(test, 1);
+                    }
+                }
+
+
+            }
+
+
+            Console.WriteLine("There are " + tls["tra"] + " instances of tra");
+            Console.WriteLine(tls["rat"]);
+            Console.WriteLine(tls["pre"]);
             Console.ReadKey();
 
         }
