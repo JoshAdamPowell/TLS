@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace TLS
 {
@@ -38,40 +38,34 @@ namespace TLS
 
             }
 
-            List<string> sixtythreekeys = new List<string>();
+            Console.WriteLine("I can find all the three letter sequences that appear x times. How many times is x?");
+            int valueToFind = Int32.Parse(Console.ReadLine());
+            var keysToFind = tls.Where(x => x.Value == valueToFind).Select(x => x.Key).ToList();
 
-
-            foreach(KeyValuePair<string, int> kvp in tls)
-            {
-                if (kvp.Value == 63)
-                {
-                    sixtythreekeys.Add(kvp.Key);
-                }
-            }
 
 
 
             Console.WriteLine("There are " + tls["tra"] + " instances of tra");
 
-            Console.WriteLine("These are all the TLSs which occur 63 times.");
-            foreach(string i in sixtythreekeys)
+            Console.WriteLine("These are all the TLSs which occur " + valueToFind + " times.");
+            foreach (string i in keysToFind)
             {
                 Console.WriteLine(i);
             }
 
-            int mostcommonvalue = 0;
-            string mostcommonkey = "";
+            int mostCommonValue = 0;
+            string mostCommonKey = "";
 
-            foreach(KeyValuePair<string,int> kvp in tls)
+            foreach (KeyValuePair<string, int> kvp in tls)
             {
-                if (kvp.Value > mostcommonvalue)
+                if (kvp.Value > mostCommonValue)
                 {
-                    mostcommonkey = kvp.Key;
-                    mostcommonvalue = kvp.Value;
+                    mostCommonKey = kvp.Key;
+                    mostCommonValue = kvp.Value;
                 }
 
             }
-            Console.WriteLine("The most common TLS is " + mostcommonkey);
+            Console.WriteLine("The most common TLS is " + mostCommonKey);
 
 
 
