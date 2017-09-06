@@ -56,19 +56,15 @@ namespace TLS
             int mostCommonValue = 0;
             string mostCommonKey = "";
 
-            foreach (KeyValuePair<string, int> kvp in tls)
+
+            var mostCommonKeys = tls.OrderByDescending(x => x.Value).Select(x => x.Key).ToList();
+
+            Console.WriteLine("These are the most common TLSs in descending order.");
+
+            for (var i = 0; i < 10; i++)
             {
-                if (kvp.Value > mostCommonValue)
-                {
-                    mostCommonKey = kvp.Key;
-                    mostCommonValue = kvp.Value;
-                }
-
+                Console.WriteLine(mostCommonKeys[i]);
             }
-            Console.WriteLine("The most common TLS is " + mostCommonKey);
-
-
-
             Console.ReadKey();
 
         }
