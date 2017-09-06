@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
+
 
 namespace TLS
 {
@@ -11,37 +11,38 @@ namespace TLS
     {
         static void Main(string[] args)
         {
-            Dictionary <string, int> CreateDictionary (string fileLocation)
+
+            Dictionary<string, int> CreateDictionary(string fileToRead)
             {
                 //This function makes a dictionary from an file found in location. The dictionary has all 3 alphabetical sequences possible, with the amount
                 //of times each appears as the value.
-                string input = File.ReadAllText(fileLocation);
-                int length = input.Length;
-                Dictionary<string, int> tls = new Dictionary<string, int>();
 
-                Regex characters = new Regex(@"[A-Za-z]{3}");
+                int fileLength = fileToRead.Length;
+                Dictionary<string, int> threeLetterSequenceDictionary = new Dictionary<string, int>();
 
-                for (var i = 0; i < length - 2; i++)
+                Regex regexToApply = new Regex(@"[A-Za-z]{3}");
+
+                for (var i = 0; i < fileLength - 2; i++)
                 {
-                    string test = input.Substring(i, 3);
+                    string test = fileToRead.Substring(i, 3);
                     test = test.ToLower();
-                    if (characters.IsMatch(test))
+                    if (regexToApply.IsMatch(test))
                     {
 
 
-                        if (tls.ContainsKey(test))
+                        if (threeLetterSequenceDictionary.ContainsKey(test))
                         {
-                            tls[test] = tls[test] + 1;
+                            threeLetterSequenceDictionary[test] = threeLetterSequenceDictionary[test] + 1;
                         }
                         else
                         {
-                            tls.Add(test, 1);
+                            threeLetterSequenceDictionary.Add(test, 1);
                         }
                     }
 
 
                 }
-                return tls;
+                return threeLetterSequenceDictionary;
             }
             List<string> howManyTLSs(Dictionary<string, int> dictionary, int valueSearch)
             {
@@ -61,13 +62,15 @@ namespace TLS
             }
 
 
-            var threeLetterSequences = CreateDictionary(@"c:\work\training\TLS\SampleText.txt");
+            string rawData = File.ReadAllText(@"c:\work\training\TLS\SampleText.txt");
+
+            var threeLetterSequences = CreateDictionary(rawData);
 
             Console.WriteLine("I can find all the three letter sequences that appear x times. How many times is x?");
             int valueToFind = Int32.Parse(Console.ReadLine());
 
             Console.WriteLine("These are all the TLSs which occur " + valueToFind + " times.");
-         
+
             var whichTLSs = howManyTLSs(threeLetterSequences, valueToFind);
 
             foreach (string i in whichTLSs)
@@ -75,10 +78,10 @@ namespace TLS
                 Console.WriteLine(i);
             }
 
-
+            Console.WriteLine();
             var keys = mostCommonTLS(threeLetterSequences);
             Console.WriteLine("These are the 10 most common TLSs");
-            foreach(string i in keys)
+            foreach (string i in keys)
             {
                 Console.WriteLine(i);
             }
