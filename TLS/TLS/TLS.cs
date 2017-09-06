@@ -15,7 +15,7 @@ namespace TLS
             int length = input.Length;
             Dictionary<string, int> tls = new Dictionary<string, int>();
 
-            Regex characters = new Regex(@"\w{3}");
+            Regex characters = new Regex(@"[A-Za-z]{3}");
 
             for (var i = 0; i < length - 2; i++)
             {
@@ -42,24 +42,16 @@ namespace TLS
             int valueToFind = Int32.Parse(Console.ReadLine());
             var keysToFind = tls.Where(x => x.Value == valueToFind).Select(x => x.Key).ToList();
 
-
-
-
-            Console.WriteLine("There are " + tls["tra"] + " instances of tra");
-
             Console.WriteLine("These are all the TLSs which occur " + valueToFind + " times.");
             foreach (string i in keysToFind)
             {
                 Console.WriteLine(i);
             }
 
-            int mostCommonValue = 0;
-            string mostCommonKey = "";
-
 
             var mostCommonKeys = tls.OrderByDescending(x => x.Value).Select(x => x.Key).ToList();
 
-            Console.WriteLine("These are the most common TLSs in descending order.");
+            Console.WriteLine("These are the 10 most common TLSs in descending order.");
 
             for (var i = 0; i < 10; i++)
             {
