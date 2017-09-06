@@ -38,10 +38,32 @@ namespace TLS
 
             }
 
+            List<string> sixtythreekeys = new List<string>();
+
+
+            foreach(KeyValuePair<string, int> kvp in tls)
+            {
+                if (kvp.Value == 63)
+                {
+                    sixtythreekeys.Add(kvp.Key);
+                }
+            }
+
+
 
             Console.WriteLine("There are " + tls["tra"] + " instances of tra");
-            Console.WriteLine(tls["rat"]);
-            Console.WriteLine(tls["pre"]);
+
+            Console.WriteLine("These are all the TLSs which occur 63 times.");
+            foreach(string i in sixtythreekeys)
+            {
+                Console.WriteLine(i);
+            }
+
+
+
+
+
+
             Console.ReadKey();
 
         }
