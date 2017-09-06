@@ -14,7 +14,7 @@ namespace TLS
             for (var i = 0; i < length; i++)
             {
                
-                if ((input[i] == 't') && (input[i+1] == 'r') && (input[i+2] == 'a'))
+                if ((input[i] == 't'|| input[i] == 'T') && (input[i+1] == 'r'|| input[i + 1] == 'R') && (input[i+2] == 'a'|| input[i + 2] == 'A'))
                 {
                     counter = counter + 1;
                 }
